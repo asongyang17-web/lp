@@ -273,6 +273,44 @@
       line-height: 1.7;
     }
 
+    .church-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .church-count-card {
+      padding: 14px;
+      border: 1px solid #e0e3e7;
+      border-radius: 6px;
+      background: #f8f9fa;
+    }
+
+    .church-count-id {
+      display: block;
+      margin-bottom: 4px;
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .church-count-name {
+      display: block;
+      min-height: 42px;
+      color: #3c4043;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .church-count-number {
+      display: block;
+      margin-top: 8px;
+      color: #137333;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
     .summary-table-container {
       overflow-x: auto;
       border: 1px solid #e0e3e7;
@@ -627,23 +665,23 @@
           <option value="" disabled selected>
             -- ເລືອກຄຣິດທະຈັກ --
           </option>
-          <option value="ນະຄອນຫຼວງວຽງຈັນ">
-            ນະຄອນຫຼວງວຽງຈັນ (萬象 Vientiane)
+          <option value="CH-001">
+            ນະຄອນຫຼວງວຽງຈັນ (萬象 Vientiane) — CH-001
           </option>
-          <option value="ຫຼວງພະບາງ">
-            ຫຼວງພະບາງ (琅勃拉邦)
+          <option value="CH-002">
+            ຫຼວງພະບາງ (琅勃拉邦) — CH-002
           </option>
-          <option value="ວັງວຽງ">
-            ວັງວຽງ (萬榮)
+          <option value="CH-003">
+            ວັງວຽງ (萬榮) — CH-003
           </option>
-          <option value="ປາກເຊ">
-            ປາກເຊ (巴色)
+          <option value="CH-004">
+            ປາກເຊ (巴色) — CH-004
           </option>
-          <option value="ບົວລະພາ">
-            ບົວລະພາ (博拉帕)
+          <option value="CH-005">
+            ບົວລະພາ (博拉帕) — CH-005
           </option>
-          <option value="ໂພນສະຫວັນ">
-            ໂພນສະຫວັນ (豐沙灣)
+          <option value="CH-006">
+            ໂພນສະຫວັນ (豐沙灣) — CH-006
           </option>
         </select>
       </div>
@@ -881,6 +919,7 @@
       <p id="summaryStatus" role="status" aria-live="polite">
         ກຳລັງໂຫຼດລາຍການ...
       </p>
+      <div id="churchSummary" class="church-summary" aria-label="ຈຳນວນຄົນແຕ່ລະຄຣິດຈັກ" hidden></div>
       <div id="summaryTableContainer" class="summary-table-container" hidden>
         <table class="summary-table">
           <thead id="summaryTableHead"></thead>
@@ -931,7 +970,7 @@
   <script>
     // URL ຂອງ Google Apps Script Web App
     const scriptURL =
-      "https://script.google.com/macros/s/AKfycbzsvZHn8bbfGtgIkOEB2M9xucBibSoFlohU3dAH90_CIk0_U8xeb9tCrT5v5UoUdkea/exec";
+      "https://script.google.com/macros/s/AKfycby7YRoE7NmSH2Qx5ScbSOiI88Dam3yZSG9N5uUNrQ8vnk8Q9lqAGVH_xqfqfR2y0NjQ/exec";
 
     const form = document.getElementById("myForm");
     const message = document.getElementById("message");
@@ -946,6 +985,7 @@
     const homeSection = document.getElementById("homeSection");
     const summarySection = document.getElementById("summarySection");
     const summaryStatus = document.getElementById("summaryStatus");
+    const churchSummaryContainer = document.getElementById("churchSummary");
     const summaryTableContainer =
       document.getElementById("summaryTableContainer");
     const summaryTableHead = document.getElementById("summaryTableHead");
@@ -983,7 +1023,33 @@
       summaryStatus.classList.toggle("error", isError);
     }
 
-    function renderRegistrations(headers, rows) {
+    function renderChurchSummary(churches) {
+      churchSummaryContainer.replaceChildren();
+
+      churches.forEach(function (church) {
+        const card = document.createElement("div");
+        card.className = "church-count-card";
+
+        const id = document.createElement("span");
+        id.className = "church-count-id";
+        id.textContent = church.id;
+
+        const name = document.createElement("span");
+        name.className = "church-count-name";
+        name.textContent = church.name;
+
+        const count = document.createElement("span");
+        count.className = "church-count-number";
+        count.textContent = `${church.count} ຄົນ`;
+
+        card.append(id, name, count);
+        churchSummaryContainer.appendChild(card);
+      });
+
+      churchSummaryContainer.hidden = churches.length === 0;
+    }
+
+    function renderRegistrations(headers, rows, churches) {
       summaryTableHead.replaceChildren();
       summaryTableBody.replaceChildren();
 
@@ -998,9 +1064,14 @@
 
       rows.forEach(function (row) {
         const tableRow = document.createElement("tr");
-        row.forEach(function (value) {
+        row.forEach(function (value, index) {
           const cell = document.createElement("td");
-          cell.textContent = value == null ? "" : String(value);
+          const church = index === 2
+            ? churches.find(item => item.id === String(value))
+            : null;
+          cell.textContent = church
+            ? `${church.id} - ${church.name}`
+            : value == null ? "" : String(value);
           tableRow.appendChild(cell);
         });
         summaryTableBody.appendChild(tableRow);
@@ -1027,11 +1098,13 @@
 
         const result = await response.json();
         if (!result.success || !Array.isArray(result.headers) ||
-            !Array.isArray(result.rows)) {
+            !Array.isArray(result.rows) ||
+            !Array.isArray(result.churchSummary)) {
           throw new Error(result.message || "Invalid summary response");
         }
 
-        renderRegistrations(result.headers, result.rows);
+        renderChurchSummary(result.churchSummary);
+        renderRegistrations(result.headers, result.rows, result.churchSummary);
         summaryLoaded = true;
       } catch (error) {
         console.error("Summary load error:", error);
