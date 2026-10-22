@@ -1,0 +1,702 @@
+
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ຟອມລົງທະບຽນຄຣິດທະຈັກ</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 30px 15px;
+      background: #f0f4f8;
+      color: #202124;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .header {
+      background: #ffffff;
+      padding: 25px;
+      margin-bottom: 18px;
+      border-top: 8px solid #08cf4a;
+      border-radius: 1px;
+      box-shadow: 0 2px 8px #0000000d;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .description {
+      color: #5f6368;
+      line-height: 1.8;
+      margin-bottom: 0;
+    }
+
+    form {
+      padding: 25px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px #00000012;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.7;
+    }
+
+    .required {
+      color: #d93025;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 44px;
+      padding: 11px 12px;
+      border: 1px solid #dadce0;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #202124;
+      font: inherit;
+    }
+
+    input:focus,
+    select:focus {
+      outline: 2px solid #d2e3fc;
+      border-color: #4285f4;
+    }
+
+    .date-fields {
+      display: flex;
+      gap: 8px;
+    }
+
+    .date-fields select {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hint {
+      display: block;
+      margin-top: 6px;
+      color: #6b7280;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .preview-box {
+      margin-top: 12px;
+    }
+
+    #imagePreview {
+      display: none;
+      max-width: 100%;
+      max-height: 280px;
+      border-radius: 8px;
+      border: 1px solid #dadce0;
+      object-fit: contain;
+    }
+
+    #imageError {
+      color: #d93025;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .button-row button {
+      flex: 1;
+      min-height: 46px;
+      padding: 12px;
+      border: 0;
+      border-radius: 6px;
+      background: #039830;
+      color: #ffffff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .button-row button:hover {
+      background: #05a039;
+    }
+
+    .button-row button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .button-row .reset-button {
+      margin-top: 0;
+      color: #1967d2;
+      background: #ffffff;
+      border: 1px solid #dadce0;
+    }
+
+    .button-row .reset-button:hover {
+      background: #f1f3f4;
+    }
+
+    #message {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    #message.success {
+      color: #137333;
+    }
+
+    #message.error {
+      color: #b3261e;
+    }
+
+    #message.info {
+      color: #1967d2;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 18px;
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 15px 10px;
+      }
+
+      .header,
+      form {
+        padding: 20px 16px;
+      }
+
+      h2 {
+        font-size: 21px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+
+    <header class="header">
+      <h2>ຟອມລົງທະບຽນຄຣິດທະຈັກ</h2>
+
+      <p class="description">
+        ກະລຸນາປ້ອນຂໍ້ມູນໃຫ້ຄົບຖ້ວນ.
+        ຊ່ອງທີ່ມີ <span class="required">*</span>
+        ແມ່ນຂໍ້ມູນທີ່ຈຳເປັນ.
+      </p>
+    </header>
+
+    <form id="myForm">
+
+      <!-- ຄຣິດທະຈັກ -->
+      <div class="form-group">
+        <label for="address">
+          ຄຣິດທະຈັກ <span class="required">*</span>
+        </label>
+
+        <select id="address" name="address" required>
+          <option value="" disabled selected>
+            -- ເລືອກຄຣິດທະຈັກ --
+          </option>
+          <option value="ນະຄອນຫຼວງວຽງຈັນ">
+            ນະຄອນຫຼວງວຽງຈັນ (萬象 Vientiane)
+          </option>
+          <option value="ຫຼວງພະບາງ">
+            ຫຼວງພະບາງ (琅勃拉邦)
+          </option>
+          <option value="ວັງວຽງ">
+            ວັງວຽງ (萬榮)
+          </option>
+          <option value="ປາກເຊ">
+            ປາກເຊ (巴色)
+          </option>
+          <option value="ບົວລະພາ">
+            ບົວລະພາ (博拉帕)
+          </option>
+          <option value="ໂພນສະຫວັນ">
+            ໂພນສະຫວັນ (豐沙灣)
+          </option>
+        </select>
+      </div>
+
+      <!-- ເມືອງ / ເຂດ -->
+      <div class="form-group">
+        <label for="district">
+          ເມືອງ/ເຂດ <span class="required">*</span>
+        </label>
+
+        <input
+          id="district"
+          type="text"
+          name="district"
+          placeholder="ປ້ອນຊື່ເມືອງ ຫຼື ເຂດ"
+          required
+        >
+      </div>
+
+      <!-- ຊື່ ແລະ ນາມສະກຸນ -->
+      <div class="form-group">
+        <label for="name">
+          ຊື່ ແລະ ນາມສະກຸນ <span class="required">*</span>
+        </label>
+
+        <input
+          id="name"
+          type="text"
+          name="name"
+          placeholder="ປ້ອນຊື່ ແລະ ນາມສະກຸນ"
+          autocomplete="name"
+          required
+        >
+      </div>
+
+      <!-- ຊື່ຫຼິ້ນ -->
+      <div class="form-group">
+        <label for="nickname">
+          ຊື່ຫຼິ້ນ <span class="required">*</span>
+        </label>
+
+        <input
+          id="nickname"
+          type="text"
+          name="nickname"
+          placeholder="ປ້ອນຊື່ຫຼິ້ນ"
+          required
+        >
+      </div>
+
+      <!-- ເພດ -->
+      <div class="form-group">
+        <label for="gender">
+          ເພດ <span class="required">*</span>
+        </label>
+
+        <select id="gender" name="gender" required>
+          <option value="" disabled selected>-- ເລືອກເພດ --</option>
+          <option value="ຊາຍ">ຊາຍ</option>
+          <option value="ຍິງ">ຍິງ</option>
+          <option value="ອື່ນໆ">ອື່ນໆ</option>
+        </select>
+      </div>
+
+      <!-- ສະຖານະສົມລົດ -->
+      <div class="form-group">
+        <label for="maritalStatus">
+          ສະຖານະສົມລົດ <span class="required">*</span>
+        </label>
+
+        <select id="maritalStatus" name="maritalStatus" required>
+          <option value="" disabled selected>-- ເລືອກສະຖານະ --</option>
+          <option value="ບໍ່ໄດ້ແຕ່ງງານ">ບໍ່ໄດ້ແຕ່ງງານ</option>
+          <option value="ແຕ່ງງານແລ້ວ">ແຕ່ງງານແລ້ວ</option>
+        </select>
+      </div>
+
+      <!-- ເບີໂທ -->
+      <div class="form-group">
+        <label for="phone">
+          ເບີໂທ <span class="required">*</span>
+        </label>
+
+        <input
+          id="phone"
+          type="tel"
+          name="phone"
+          autocomplete="tel"
+          inputmode="tel"
+          pattern="[0-9+\-\s]{8,20}"
+          placeholder="020 xxxx xxxx"
+          title="ປ້ອນເບີໂທ 8-20 ຕົວອັກສອນ"
+          required
+        >
+
+        <small class="hint">
+          ສາມາດໃຊ້ຕົວເລກ, ເຄື່ອງໝາຍ + ແລະຂີດໄດ້.
+        </small>
+      </div>
+
+      <!-- ວັນເກີດ -->
+      <div class="form-group">
+        <label for="birthYear">
+          ວັນເດືອນປີເກີດ <span class="required">*</span>
+        </label>
+
+        <div class="date-fields">
+          <select id="birthDay" required aria-label="ວັນເກີດ">
+            <option value="" selected disabled>ວັນ</option>
+          </select>
+          <select id="birthMonth" required aria-label="ເດືອນເກີດ">
+            <option value="" selected disabled>ເດືອນ</option>
+            <option value="01">01</option>
+            <option value="02">02</option>
+            <option value="03">03</option>
+            <option value="04">04</option>
+            <option value="05">05</option>
+            <option value="06">06</option>
+            <option value="07">07</option>
+            <option value="08">08</option>
+            <option value="09">09</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+          <select id="birthYear" required aria-label="ປີເກີດ">
+            <option value="" selected disabled>ປີ</option>
+          </select>
+        </div>
+        <input id="birthdate" type="hidden" name="birthdate">
+      </div>
+
+      <!-- ວັນຮັບບັບຕິສະມາ -->
+      <div class="form-group">
+        <label for="baptismYear">
+          ວັນທີຮັບບັບຕິສະມາ
+          <span class="required">*</span>
+        </label>
+
+        <div class="date-fields">
+          <select id="baptismDay" required aria-label="ວັນຮັບບັບຕິສະມາ">
+            <option value="" selected disabled>ວັນ</option>
+          </select>
+          <select id="baptismMonth" required aria-label="ເດືອນຮັບບັບຕິສະມາ">
+            <option value="" selected disabled>ເດືອນ</option>
+            <option value="01">01</option>
+            <option value="02">02</option>
+            <option value="03">03</option>
+            <option value="04">04</option>
+            <option value="05">05</option>
+            <option value="06">06</option>
+            <option value="07">07</option>
+            <option value="08">08</option>
+            <option value="09">09</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+          <select id="baptismYear" required aria-label="ປີຮັບບັບຕິສະມາ">
+            <option value="" selected disabled>ປີ</option>
+          </select>
+        </div>
+        <input id="baptismDate" type="hidden" name="baptismDate">
+      </div>
+
+      <!-- ທີ່ຢູ່ປັດຈຸບັນ -->
+      <div class="form-group">
+        <label for="currentAddress">
+          ທີ່ຢູ່ປັດຈຸບັນ <span class="required">*</span>
+        </label>
+
+        <input
+          id="currentAddress"
+          type="text"
+          name="currentAddress"
+          placeholder="ບ້ານ, ເມືອງ, ແຂວງ"
+          autocomplete="street-address"
+          required
+        >
+      </div>
+
+      <!-- URL ຮູບພາບ -->
+      <div class="form-group">
+        <label for="imageUrl">ລິ້ງຮູບພາບ</label>
+
+        <input
+          type="url"
+          id="imageUrl"
+          name="image_url"
+          placeholder="https://example.com/image.jpg"
+          oninput="previewUrl(this.value)"
+        >
+
+        <small class="hint">
+          ໃສ່ URL ຮູບພາບທີ່ເປີດເບິ່ງໄດ້ໂດຍກົງ.
+        </small>
+
+        <div class="preview-box">
+          <img
+            id="imagePreview"
+            alt="ຕົວຢ່າງຮູບພາບ"
+          >
+          <p id="imageError" role="status"></p>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button type="reset" class="reset-button" id="resetButton">
+          ລ້າງຟອມ
+        </button>
+
+        <!-- ປຸ່ມບັນທຶກ -->
+        <button type="submit" id="submitButton">
+          ບັນທຶກຂໍ້ມູນ
+        </button>
+      </div>
+
+    </form>
+
+    <p id="message" role="status" aria-live="polite"></p>
+
+    <footer>
+      ລະບົບລົງທະບຽນຄຣິດທະຈັກ
+    </footer>
+
+  </main>
+
+  <script>
+    // URL ຂອງ Google Apps Script Web App
+    const scriptURL =
+      "https://script.google.com/macros/s/AKfycbzsvZHn8bbfGtgIkOEB2M9xucBibSoFlohU3dAH90_CIk0_U8xeb9tCrT5v5UoUdkea/exec";
+
+    const form = document.getElementById("myForm");
+    const message = document.getElementById("message");
+    const submitButton = document.getElementById("submitButton");
+    const imagePreview = document.getElementById("imagePreview");
+    const imageError = document.getElementById("imageError");
+
+    // ກຳນົດວັນທີສູງສຸດເປັນມື້ນີ້
+    const today = new Date();
+    const localToday = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0")
+    ].join("-");
+
+    const birthDay = document.getElementById("birthDay");
+    const birthMonth = document.getElementById("birthMonth");
+    const birthYear = document.getElementById("birthYear");
+    const birthdate = document.getElementById("birthdate");
+    const baptismDay = document.getElementById("baptismDay");
+    const baptismMonth = document.getElementById("baptismMonth");
+    const baptismYear = document.getElementById("baptismYear");
+    const baptismDate = document.getElementById("baptismDate");
+
+    for (let year = today.getFullYear(); year >= 1900; year--) {
+      const option = document.createElement("option");
+      option.value = String(year);
+      option.textContent = String(year);
+      birthYear.appendChild(option);
+
+      const baptismYearOption = option.cloneNode(true);
+      baptismYear.appendChild(baptismYearOption);
+    }
+
+    function updateBirthDays() {
+      const selectedDay = birthDay.value;
+      const month = Number(birthMonth.value);
+      const year = Number(birthYear.value);
+      const daysInMonth = month && year
+        ? new Date(year, month, 0).getDate()
+        : 31;
+
+      birthDay.length = 1;
+      for (let day = 1; day <= daysInMonth; day++) {
+        const option = document.createElement("option");
+        option.value = String(day).padStart(2, "0");
+        option.textContent = String(day);
+        birthDay.appendChild(option);
+      }
+
+      if (Number(selectedDay) <= daysInMonth && selectedDay) {
+        birthDay.value = selectedDay;
+      }
+
+      updateBirthdate();
+    }
+
+    function updateBirthdate() {
+      birthdate.value = birthYear.value && birthMonth.value && birthDay.value
+        ? `${birthYear.value}-${birthMonth.value}-${birthDay.value}`
+        : "";
+    }
+
+    birthMonth.addEventListener("change", updateBirthDays);
+    birthYear.addEventListener("change", updateBirthDays);
+    birthDay.addEventListener("change", updateBirthdate);
+    updateBirthDays();
+
+    function updateBaptismDays() {
+      const selectedDay = baptismDay.value;
+      const month = Number(baptismMonth.value);
+      const year = Number(baptismYear.value);
+      const daysInMonth = month && year
+        ? new Date(year, month, 0).getDate()
+        : 31;
+
+      baptismDay.length = 1;
+      for (let day = 1; day <= daysInMonth; day++) {
+        const option = document.createElement("option");
+        option.value = String(day).padStart(2, "0");
+        option.textContent = String(day);
+        baptismDay.appendChild(option);
+      }
+
+      if (Number(selectedDay) <= daysInMonth && selectedDay) {
+        baptismDay.value = selectedDay;
+      }
+
+      updateBaptismDate();
+    }
+
+    function updateBaptismDate() {
+      baptismDate.value = baptismYear.value && baptismMonth.value && baptismDay.value
+        ? `${baptismYear.value}-${baptismMonth.value}-${baptismDay.value}`
+        : "";
+    }
+
+    baptismMonth.addEventListener("change", updateBaptismDays);
+    baptismYear.addEventListener("change", updateBaptismDays);
+    baptismDay.addEventListener("change", updateBaptismDate);
+    updateBaptismDays();
+
+    // ສະແດງຮູບພາບຕົວຢ່າງ
+    function previewUrl(url) {
+      imagePreview.style.display = "none";
+      imagePreview.removeAttribute("src");
+      imageError.textContent = "";
+
+      if (!url.trim()) return;
+
+      let parsed;
+
+      try {
+        parsed = new URL(url);
+
+        if (!["http:", "https:"].includes(parsed.protocol)) {
+          throw new Error("Invalid protocol");
+        }
+      } catch (error) {
+        imageError.textContent = "URL ຮູບພາບບໍ່ຖືກຕ້ອງ.";
+        return;
+      }
+
+      imagePreview.onload = function () {
+        imagePreview.style.display = "block";
+        imageError.textContent = "";
+      };
+
+      imagePreview.onerror = function () {
+        imagePreview.style.display = "none";
+        imageError.textContent =
+          "ບໍ່ສາມາດໂຫຼດຮູບໄດ້. ກະລຸນາກວດລິ້ງຮູບ.";
+      };
+
+      imagePreview.src = parsed.href;
+    }
+
+    // ລ້າງຮູບ Preview ເມື່ອ Reset
+    form.addEventListener("reset", function () {
+      setTimeout(function () {
+        imagePreview.style.display = "none";
+        imagePreview.removeAttribute("src");
+        imageError.textContent = "";
+        message.textContent = "";
+        message.className = "";
+      }, 0);
+    });
+
+    // ກວດວັນທີກ່ອນສົ່ງ
+    function validateDates() {
+      const birth = document.getElementById("birthdate").value;
+      const baptism = document.getElementById("baptismDate").value;
+
+      if (birth && birth > localToday) {
+        return "ວັນເກີດບໍ່ສາມາດເປັນວັນໃນອະນາຄົດ.";
+      }
+
+      if (baptism && baptism > localToday) {
+        return "ວັນຮັບບັບຕິສະມາບໍ່ສາມາດເປັນວັນໃນອະນາຄົດ.";
+      }
+
+      if (birth && baptism && baptism < birth) {
+        return "ວັນຮັບບັບຕິສະມາຕ້ອງບໍ່ກ່ອນວັນເກີດ.";
+      }
+
+      return "";
+    }
+
+    // ສົ່ງຂໍ້ມູນ
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const dateError = validateDates();
+
+      if (dateError) {
+        message.className = "error";
+        message.textContent = dateError;
+        return;
+      }
+
+      if (!navigator.onLine) {
+        message.className = "error";
+        message.textContent =
+          "ບໍ່ມີ Internet. ກະລຸນາເຊື່ອມຕໍ່ແລ້ວລອງໃໝ່.";
+        return;
+      }
+
+      const data = new URLSearchParams(new FormData(form));
+
+      submitButton.disabled = true;
+      submitButton.textContent = "ກຳລັງສົ່ງ...";
+      message.className = "info";
+      message.textContent = "ກຳລັງສົ່ງຂໍ້ມູນ...";
+
+      try {
+        await fetch(scriptURL, {
+          method: "POST",
+          mode: "no-cors",
+          body: data
+        });
+
+        // no-cors ບໍ່ສາມາດຢືນຢັນຜົນຈາກ Server ໄດ້
+        message.className = "info";
+        message.textContent =
+          "ສົ່ງຄຳຂໍແລ້ວ. ກະລຸນາກວດ Google Sheets ເພື່ອຢືນຢັນ.";
+
+        form.reset();
+
+      } catch (error) {
+        console.error("Submit error:", error);
+
+        message.className = "error";
+        message.textContent =
+          "ສົ່ງບໍ່ສຳເລັດ. ກະລຸນາກວດ Internet ແລະ URL.";
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "ບັນທຶກຂໍ້ມູນ";
+      }
+    });
+  </script>
+</body>
+</html>
