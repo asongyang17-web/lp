@@ -21,7 +21,7 @@
       font-family: 'Noto Sans Lao', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       margin: 0;
       padding: 30px 15px;
-      background: #f0f4f8;
+      background: #ffffff;
       color: #202124;
       -webkit-font-smoothing: antialiased;
     }
@@ -29,6 +29,7 @@
     main {
       max-width: 600px;
       margin: 0 auto;
+      padding-bottom: 82px;
     }
 
     .header {
@@ -37,7 +38,7 @@
       margin-bottom: 18px;
       border-top: 8px solid #08cf4a;
       border-radius: 1px;
-      box-shadow: 0 2px 8px #0000000d;
+      box-shadow: inset 0 0 0 1px #e5e7eb;
     }
 
     h2 {
@@ -55,8 +56,8 @@
     form {
       padding: 25px;
       background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px #00000012;
+      border-radius: 1px;
+      box-shadow: inset 0 0 0 1px #e5e7eb;
     }
 
     .form-group {
@@ -185,6 +186,126 @@
 
     #message.info {
       color: #1967d2;
+    }
+
+    .main-navigation {
+      position: fixed;
+      left: 50%;
+      right: auto;
+      bottom: 0;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      width: min(600px, calc(100% - 30px));
+      padding: 10px 15px;
+      border-top: 1px solid #e0e3e7;
+      background: #ffffff;
+      box-shadow: 0 -2px 10px #00000012;
+      transform: translateX(-50%);
+    }
+
+    .main-navigation button {
+      flex: 1;
+      min-height: 42px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #5f6368;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .main-navigation button.is-active {
+      background: #e6f4ea;
+      color: #137333;
+      font-weight: 700;
+    }
+
+    .summary-card {
+      padding: 24px;
+      border-radius: 2px;
+      background: #ffffff;
+      box-shadow: inset 0 0 0 1px #e5e7eb;
+    }
+
+    .summary-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .summary-heading h2 {
+      margin: 0;
+      text-align: left;
+    }
+
+    #refreshSummary {
+      padding: 9px 14px;
+      border: 1px solid #dadce0;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #137333;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    #refreshSummary:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    #summaryStatus {
+      margin: 0 0 14px;
+      color: #5f6368;
+      line-height: 1.7;
+    }
+
+    #summaryStatus.error {
+      color: #b3261e;
+    }
+
+    .summary-privacy-note {
+      margin: 0 0 14px;
+      color: #8a4b08;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .summary-table-container {
+      overflow-x: auto;
+      border: 1px solid #e0e3e7;
+      border-radius: 6px;
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    .summary-table th,
+    .summary-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e8eaed;
+      text-align: left;
+    }
+
+    .summary-table th {
+      background: #f8f9fa;
+      color: #3c4043;
+      font-weight: 600;
+    }
+
+    .summary-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    #homeSection[hidden],
+    #summarySection[hidden] {
+      display: none;
     }
 
     .loading-overlay {
@@ -366,16 +487,106 @@
 
     @media (max-width: 480px) {
       body {
-        padding: 15px 10px;
+        padding: 12px 8px;
+        font-size: 14px;
+      }
+
+      main {
+        padding-bottom: 72px;
       }
 
       .header,
       form {
-        padding: 20px 16px;
+        padding: 17px 14px;
+      }
+
+      .header {
+        margin-bottom: 14px;
       }
 
       h2 {
-        font-size: 21px;
+        font-size: 19px;
+      }
+
+      .description {
+        font-size: 13px;
+      }
+
+      .form-group {
+        margin-bottom: 17px;
+      }
+
+      label {
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+
+      input,
+      select {
+        min-height: 40px;
+        padding: 9px 10px;
+        font-size: 14px;
+      }
+
+      .hint,
+      #imageError {
+        font-size: 11px;
+      }
+
+      .button-row {
+        gap: 8px;
+      }
+
+      .button-row button {
+        min-height: 40px;
+        padding: 9px 8px;
+        font-size: 14px;
+      }
+
+      .main-navigation {
+        width: auto;
+        right: 0;
+        left: 0;
+        gap: 8px;
+        padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+        transform: none;
+      }
+
+      .main-navigation button {
+        min-height: 38px;
+        font-size: 14px;
+      }
+
+      .summary-card {
+        padding: 17px 14px;
+      }
+
+      .summary-table {
+        font-size: 12px;
+      }
+
+      .summary-table th,
+      .summary-table td {
+        padding: 8px 9px;
+      }
+
+      .loading-card {
+        max-width: 290px;
+        padding: 22px 18px;
+      }
+
+      .success-modal-card {
+        max-width: 340px;
+        padding: 52px 22px 20px;
+      }
+
+      .success-title {
+        font-size: 23px;
+      }
+
+      .success-ok-btn {
+        padding: 9px 14px;
+        font-size: 14px;
       }
     }
   </style>
@@ -394,6 +605,16 @@
       </p>
     </header>
 
+    <nav class="main-navigation" aria-label="Main navigation">
+      <button type="button" id="homeNav" class="is-active" aria-current="page">
+        Home
+      </button>
+      <button type="button" id="summaryNav">
+        ສະຫຼຸບ
+      </button>
+    </nav>
+
+    <section id="homeSection">
     <form id="myForm">
 
       <!-- ຄຣິດທະຈັກ -->
@@ -647,6 +868,26 @@
     <footer>
       ລະບົບລົງທະບຽນຄຣິດທະຈັກ
     </footer>
+    </section>
+
+    <section id="summarySection" class="summary-card" hidden>
+      <div class="summary-heading">
+        <h2>ລາຍຊື່ລົງທະບຽນ</h2>
+        <button type="button" id="refreshSummary">ໂຫຼດຄືນ</button>
+      </div>
+      <p class="summary-privacy-note">
+        ໝາຍເຫດ: ລາຍຊື່ແລະຂໍ້ມູນໃນສ່ວນນີ້ສາທາລະນະ ແລະທຸກຄົນທີ່ເຂົ້າໜ້າເວັບສາມາດເບິ່ງໄດ້.
+      </p>
+      <p id="summaryStatus" role="status" aria-live="polite">
+        ກຳລັງໂຫຼດລາຍການ...
+      </p>
+      <div id="summaryTableContainer" class="summary-table-container" hidden>
+        <table class="summary-table">
+          <thead id="summaryTableHead"></thead>
+          <tbody id="summaryTableBody"></tbody>
+        </table>
+      </div>
+    </section>
 
   </main>
 
@@ -700,6 +941,110 @@
     const loadingOverlay = document.getElementById("loadingOverlay");
     const successModal = document.getElementById("successModal");
     const closeSuccessModalBtn = document.getElementById("closeSuccessModal");
+    const homeNav = document.getElementById("homeNav");
+    const summaryNav = document.getElementById("summaryNav");
+    const homeSection = document.getElementById("homeSection");
+    const summarySection = document.getElementById("summarySection");
+    const summaryStatus = document.getElementById("summaryStatus");
+    const summaryTableContainer =
+      document.getElementById("summaryTableContainer");
+    const summaryTableHead = document.getElementById("summaryTableHead");
+    const summaryTableBody = document.getElementById("summaryTableBody");
+    const refreshSummaryButton = document.getElementById("refreshSummary");
+    let summaryLoaded = false;
+
+    function setActiveSection(section) {
+      const showingSummary = section === "summary";
+      homeSection.hidden = showingSummary;
+      summarySection.hidden = !showingSummary;
+      homeNav.classList.toggle("is-active", !showingSummary);
+      summaryNav.classList.toggle("is-active", showingSummary);
+
+      if (showingSummary) {
+        summaryNav.setAttribute("aria-current", "page");
+        homeNav.removeAttribute("aria-current");
+        if (!summaryLoaded) loadSummary();
+      } else {
+        homeNav.setAttribute("aria-current", "page");
+        summaryNav.removeAttribute("aria-current");
+      }
+    }
+
+    homeNav.addEventListener("click", function () {
+      setActiveSection("home");
+    });
+
+    summaryNav.addEventListener("click", function () {
+      setActiveSection("summary");
+    });
+
+    function setSummaryStatus(text, isError) {
+      summaryStatus.textContent = text;
+      summaryStatus.classList.toggle("error", isError);
+    }
+
+    function renderRegistrations(headers, rows) {
+      summaryTableHead.replaceChildren();
+      summaryTableBody.replaceChildren();
+
+      const headerRow = document.createElement("tr");
+      headers.forEach(function (header) {
+        const cell = document.createElement("th");
+        cell.scope = "col";
+        cell.textContent = header;
+        headerRow.appendChild(cell);
+      });
+      summaryTableHead.appendChild(headerRow);
+
+      rows.forEach(function (row) {
+        const tableRow = document.createElement("tr");
+        row.forEach(function (value) {
+          const cell = document.createElement("td");
+          cell.textContent = value == null ? "" : String(value);
+          tableRow.appendChild(cell);
+        });
+        summaryTableBody.appendChild(tableRow);
+      });
+
+      summaryTableContainer.hidden = rows.length === 0;
+      setSummaryStatus(`ມີຂໍ້ມູນລົງທະບຽນ ${rows.length} ລາຍການ.`, false);
+    }
+
+    async function loadSummary() {
+      refreshSummaryButton.disabled = true;
+      summaryTableContainer.hidden = true;
+      setSummaryStatus("ກຳລັງໂຫຼດລາຍການ...", false);
+
+      try {
+        const response = await fetch(
+          `${scriptURL}?action=registrations`,
+          { method: "GET", cache: "no-store" }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Summary request failed: HTTP ${response.status}`);
+        }
+
+        const result = await response.json();
+        if (!result.success || !Array.isArray(result.headers) ||
+            !Array.isArray(result.rows)) {
+          throw new Error(result.message || "Invalid summary response");
+        }
+
+        renderRegistrations(result.headers, result.rows);
+        summaryLoaded = true;
+      } catch (error) {
+        console.error("Summary load error:", error);
+        setSummaryStatus(
+          "ໂຫຼດລາຍການບໍ່ສຳເລັດ. ກະລຸນາລອງໃໝ່ ຫຼືກວດການຕັ້ງຄ່າ Apps Script.",
+          true
+        );
+      } finally {
+        refreshSummaryButton.disabled = false;
+      }
+    }
+
+    refreshSummaryButton.addEventListener("click", loadSummary);
 
     function openSuccessModal() {
       if (!successModal) return;
@@ -943,6 +1288,7 @@
         message.textContent = "";
 
         form.reset();
+        summaryLoaded = false;
         openSuccessModal();
 
       } catch (error) {
